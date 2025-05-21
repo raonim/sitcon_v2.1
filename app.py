@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from sqlalchemy import inspect
-from models import db, AMV, Sinais, Usuario, MatriculasValidas
+from models import db, AMV, Sinais, Usuario, MatriculasValidas, CDV
 import csv
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
@@ -129,6 +129,121 @@ def importar_csv():
     <form method="post" enctype="multipart/form-data">
       <input type="file" name="arquivo" accept=".csv" required>
       <p>Formato esperado: "idamv","tipofuncao","L1",... (com aspas)</p>
+      <button type="submit">Importar</button>
+    </form>
+    '''
+
+@app.route('/importar_csv_cdv', methods=['GET', 'POST'])
+def importar_csv_cdv():
+    if request.method == 'POST':
+        if 'arquivo' not in request.files:
+            return "Nenhum arquivo enviado", 400
+            
+        arquivo = request.files['arquivo']
+        if not arquivo.filename.endswith('.csv'):
+            return "Formato inválido. Envie um arquivo .csv", 400
+
+        try:
+            # Processa o arquivo
+            stream = arquivo.stream.read().decode("utf-8-sig")
+            lines = stream.splitlines()
+            
+            # Configura leitor CSV para campos entre aspas
+            leitor = csv.DictReader(
+                lines,
+                delimiter=',',
+                quotechar='"',
+                skipinitialspace=True
+            )
+            
+            criados = 0
+            atualizados = 0
+            
+            for linha in leitor:
+                # Remove aspas extras dos cabeçalhos
+                linha = {k.strip('"'): v for k, v in linha.items()}
+                
+                # Busca registro existente
+                existente = CDV.query.filter_by(
+                    idcdv=linha['idcdv'],
+                    tipo=linha['tipo']
+                ).first()
+                
+                if existente:
+                    # Atualiza campos (exceto chaves primárias)
+                    existente.L1 = linha.get('L1')
+                    existente.L2 = linha.get('L2')
+                    existente.L3 = linha.get('L3')
+                    existente.L4 = linha.get('L4')
+                    existente.L5 = linha.get('L5')
+                    existente.L6 = linha.get('L6')
+                    existente.L7 = linha.get('L7')
+                    existente.L8 = linha.get('L8')
+                    existente.L9 = linha.get('L9')
+                    existente.L10 = linha.get('L10')
+                    existente.tower = linha.get('tower')
+                    existente.interface = linha.get('interface')
+                    existente.L14 = linha.get('L14')
+                    existente.L15 = linha.get('L15')
+                    existente.L16 = linha.get('L16')
+                    existente.L18 = linha.get('L18')
+                    existente.L17 = linha.get('L17')
+                    existente.L20 = linha.get('L20')
+                    existente.L21 = linha.get('L21')
+                    existente.L22 = linha.get('L22')
+                    existente.L23 = linha.get('L23')
+                    atualizados += 1
+                else:
+                    # Cria novo registro
+                    novo_registro = CDV(
+                        idcdv=linha['idcdv'],
+                        tipo=linha['tipo'],
+                        L1=linha.get('L1'),
+                        L2=linha.get('L2'),
+                        L3=linha.get('L3'),
+                        L4=linha.get('L4'),
+                        L5=linha.get('L5'),
+                        L6=linha.get('L6'),
+                        L7=linha.get('L7'),
+                        L8=linha.get('L8'),
+                        L9=linha.get('L9'),
+                        L10=linha.get('L10'),
+                        tower=linha.get('tower'),
+                        interface=linha.get('interface'),
+                        L14=linha.get('L14'),
+                        L15=linha.get('L15'),
+                        L16=linha.get('L16'),
+                        L18=linha.get('L18'),
+                        L17=linha.get('L17'),
+                        L20=linha.get('L20'),
+                        L21=linha.get('L21'),
+                        L22=linha.get('L22'),
+                        L23=linha.get('L23')
+                    )
+                    db.session.add(novo_registro)
+                    criados += 1
+            
+            db.session.commit()
+            return f"""
+                <h3>Importação concluída!</h3>
+                <p>✅ {criados} novos registros criados</p>
+                <p>🔄 {atualizados} registros atualizados</p>
+                <a href="/importar_csv_cdv">Voltar</a>
+            """
+            
+        except KeyError as e:
+            db.session.rollback()
+            return f"Erro: Campo faltando no CSV - {str(e)}", 400
+        except Exception as e:
+            db.session.rollback()
+            return f"Erro na linha {criados+atualizados+1}: {str(e)}", 500
+    
+    # GET: Mostra formulário (idêntico ao anterior)
+    return '''
+    <h2>Importar CSV - CDV</h2>
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" name="arquivo" accept=".csv" required>
+      <p>Formato esperado: "idcdv","tipo","L1",... (com aspas)</p>
       <button type="submit">Importar</button>
     </form>
     '''
@@ -453,8 +568,64 @@ def amv_detail(amv_id):
 def cdv():
     if not session.get('logado'):
         return redirect(url_for('login'))
-    cdvs = ['1N08T LUZ', '1N09T LUZ', '1N10T LUZ', '1N11T LUZ', '1S06T LUZ', '1S07T LUZ', '1S09T LUZ', '1S11T LUZ', '1S12T LUZ', '1S13T LUZ', '1S14T LUZ', '2N06T LUZ', '2N07T LUZ', '2N08T LUZ', '2N09T LUZ', '2N10T LUZ', '2S08T LUZ', '2S09T LUZ', '2S10T LUZ', '2S11T LUZ', '2S12T LUZ', '2S13T LUZ', '2S14T LUZ', '2S15T LUZ']
+    cdvs = ['1N08', '1N09', '1N10', '1N11', '1S06', '1S07', '1S09', 
+            '1S11', '1S12', '1S13', '1S14', '2N06', '2N07', '2N08', 
+            '2N09', '2N10', '2S08', '2S09', '2S10', '2S11', '2S12', 
+            '2S13', '2S14', '2S15']
     return render_template('cdv.html', cdvs=cdvs, titulo='Circuitos de Via')
+
+@app.route('/cdv/<cdv_id>')
+def cdv_detail(cdv_id):
+    if not session.get('logado'):
+        return redirect(url_for('login'))
+    
+    TRADUCAO_CAMPOS = {
+        'idcdv': 'CDV',
+        'tipo': 'Tipo',
+        'L1': 'Locação 1',
+        'L2': 'Locação 2',
+        'L3': 'Locação 3',
+        'L4': 'Locação 4',
+        'L5': 'Locação 5',
+        'L6': 'Locação 6',
+        'L7': 'Locação 7',
+        'L8': 'Locação 8',
+        'L9': 'Locação 9',
+        'L10': 'Locação 10',
+        'tower': 'NX',
+        'interface': 'Bastidor de Interface',
+        'L14': 'Locação 14',
+        'L15': 'Locação 15',
+        'L16': 'Locação 16',
+        'L18': 'Locação 18',
+        'L17': 'Locação 17',
+        'L20': 'Locação 20',
+        'L21': 'Locação 21',
+        'L22': 'Locação 22',
+        'L23': 'Locação 23'
+    }
+    
+    registros = CDV.query.filter_by(idcdv=cdv_id).all()
+    
+    if not registros:
+        flash(f'CDV {cdv_id} não encontrado', 'warning')
+        return redirect(url_for('cdv'))
+    
+    # Prepara os dados para o template
+    dados = []
+    for registro in registros:
+        campos_registro = {}
+        for coluna in CDV.__table__.columns:
+            nome_original = coluna.name
+            nome_amigavel = TRADUCAO_CAMPOS.get(nome_original, nome_original)
+            valor = getattr(registro, nome_original)
+            if valor not in [None, '']:
+                campos_registro[nome_amigavel] = valor
+        dados.append(campos_registro)
+
+    return render_template('cdv_detail.html',
+                         cdv_id=cdv_id,
+                         registros=dados)
 
 @app.route('/sinais')
 def sinais():

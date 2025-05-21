@@ -80,7 +80,6 @@
         </a>
       </div>
 
-      <!-- Grade de registros -->
       <div class="registro-grid">
         {% for registro in registros %}
         <div class="card">
@@ -94,7 +93,7 @@
                 <tbody>
                   {% if registro %}
                     {% for nome, valor in registro.items() %}
-                      {% if nome != 'tipo' %}  {# Garante que o campo tipo não aparece #}
+                      {% if nome != 'tipo' %}
                       <tr>
                         <td width="40%"><strong>{{ nome }}</strong></td>
                         <td>{{ valor }}</td>

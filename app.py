@@ -13,6 +13,21 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sitcon.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'univesp' 
 
+# Dicionário com as coordenadas fixas para cada AMV
+AMV_COORDINATES = {
+    3: {'lat': -23.53772748, 'lon': -46.62564841},
+    7: {'lat': -23.537293002295275, 'lon': -46.6272271538021},
+    9: {'lat': -23.537224763636324, 'lon': -46.62748464586983},
+    11: {'lat': -23.536951907113195, 'lon': -46.62862858190322},
+    25: {'lat': -23.53481585882352, 'lon': -46.63692885775565},
+    27: {'lat': -23.53456763366985, 'lon': -46.63777073643062}, 
+    29: {'lat': -23.53160774467059, 'lon': -46.641171676914915},
+    31: {'lat': -23.531280618446186, 'lon': -46.641427018385784},     
+    39: {'lat': -23.530611035553193, 'lon': -46.64175876209118},
+    43: {'lat':  -23.535751059028946, 'lon': -46.633295825547265},
+    47: {'lat': -23.535590081366507, 'lon': -46.63401657557258} 
+    }
+
 TRADUCOES_GERAIS = {
     'idamv': 'AMV',
     'tipofuncao': 'Tipo da Função',
@@ -340,10 +355,13 @@ def mostrar_amv(amv_id, tipo):
         flash(f'Nenhum registro de {tipo} encontrado para AMV {amv_number}', 'warning')
         return redirect(url_for('amv'))
     
+    coordenadas = AMV_COORDINATES.get(amv_number)
+    
     return render_template('amv_detail.html',
                          amv_id=amv_number,
                          registros=dados,
-                         tipo=tipo)
+                         tipo=tipo,
+                         coordenadas=coordenadas)
 
 @app.route('/amv/<amv_id>')
 @login_required

@@ -100,11 +100,10 @@ def formatar_registros(registros, model_class):
             
             valor = getattr(registro, nome_original)
 
-            # --- LINHAS A SEREM ADICIONADAS ---
+        
             # Se a coluna for de locação (L1, L2, etc.), formata o valor
             if nome_original.startswith('L') and nome_original[1:].isdigit():
                 valor = formatar_valor_locacao(valor)
-            # --- FIM DAS LINHAS A SEREM ADICIONADAS ---
 
             if valor not in [None, '']:
                 campos_registro[nome_amigavel] = valor

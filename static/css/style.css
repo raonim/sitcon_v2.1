@@ -1,12 +1,39 @@
 /* Estilos Gerais e de Componentes (extraídos de vários templates) */
 .card-header {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: 100%;
-  margin-bottom: 20px; /* Espaço entre as linhas em dispositivos móveis */
+  margin-bottom: 30px;
+}
+
+.equipamento-card{
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  margin-bottom: 22px;
+  border-radius: 100%; 
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+.card-hover-effect {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* O efeito de "levantar" quando o mouse passa por cima do link (que é o card inteiro) */
+.card-link:hover .card-hover-effect {
+  transform: translateY(-5px); /* Move o card 5 pixels para cima */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta a sombra para dar profundidade */
 }
 
 .table-responsive {
@@ -26,10 +53,9 @@
   }
 }
 
-/* Estilo para hover de imagem (da sitcon.html) */
+
 .image-hover:hover img {
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: scale(1.08);
 }
 
 /* Estilos para formulários (de login.html e cadastro.html) */
@@ -112,4 +138,27 @@
 
 .btn-voltar {
   margin-top: 20px;
+}
+
+/* Estilos para o accordion com transição na página AMV */
+.amv-button-group {
+  max-height: 0; /* Começa com altura zero (escondido) */
+  overflow: hidden; /* Esconde o conteúdo que transborda */
+  opacity: 0; /* Começa totalmente transparente */
+  transition: max-height 0.5s ease-out, opacity 0.3s ease-in; /* Define a animação */
+}
+
+/* Quando o grupo de botões estiver ativo (visível) */
+.amv-button-group.active {
+  max-height: 500px; /* Altura máxima para a animação (ajuste se tiver muitos botões) */
+  opacity: 1; /* Torna totalmente visível */
+}
+
+/* Estilo para a setinha do lado do título */
+.grupo-titulo i {
+    transition: transform 0.3s ease;
+}
+
+.grupo-titulo.active i {
+    transform: rotate(180deg); /* Gira a seta para cima quando aberto */
 }

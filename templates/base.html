@@ -11,6 +11,7 @@
 
 </head>
 <body>
+  <div class="page-wrapper">
     <nav class="navbar bg-primary navbar-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('sitcon') }}" style="font-size: 28px">
@@ -47,7 +48,7 @@
 
         {% block content %}{% endblock %}
     </div>
-
+  </div>
     <footer class="mt-5 py-3 bg-light">
       <div class="container text-center">
         <p class="mb-0">SITCON - Sistema de Informações de Trajeto de Condutores</p>

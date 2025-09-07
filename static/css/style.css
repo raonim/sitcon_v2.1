@@ -1,4 +1,33 @@
-/* Estilos Gerais e de Componentes (extraídos de vários templates) */
+/* Estilos Gerais */
+
+
+
+
+html, body {
+    height: 100%;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-wrapper {
+    flex: 1;
+}
+
+
+body {
+    background-image: url('../images/fundo.png'); 
+    background-size: cover; 
+    background-position: center center; 
+    background-attachment: fixed; 
+    background-color: #f8f9fa; 
+}
+
+
+
 .card-header {
   font-size: 1.1rem;
 }
@@ -9,11 +38,50 @@
   margin-bottom: 30px;
 }
 
-.equipamento-card{
+/* Removemos qualquer estilo de fundo ou borda do card pai */
+.equipment-card {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  align-items: center; /* Centraliza o círculo dentro do card */
+}
+
+/* Esta é a nova regra que cria e centraliza o nosso círculo */
+.equipment-circle {
+  width: 180px;  /* Largura fixa para o círculo */
+  height: 180px; /* Altura fixa e igual para um círculo perfeito */
+  
+  background-color: white; /* Fundo branco para o círculo */
+  border-radius: 50%; /* Transforma em círculo */
+  
+  /* Centraliza o conteúdo (imagem e título) DENTRO do círculo */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  /* Efeito de sombra e transição */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  height: 100%;
-  margin-bottom: 22px;
-  border-radius: 100%; 
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* Regra para controlar o tamanho da imagem DENTRO do círculo */
+.equipment-circle img {
+    max-width: 80px; /* Ajuste o tamanho da imagem como preferir */
+    height: auto;
+}
+
+/* Regra para o título DENTRO do círculo */
+.equipment-circle .card-title {
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+
+/* O efeito de hover agora é aplicado diretamente no círculo */
+.card-link:hover .equipment-circle {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .card-link {
@@ -30,10 +98,9 @@
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-/* O efeito de "levantar" quando o mouse passa por cima do link (que é o card inteiro) */
 .card-link:hover .card-hover-effect {
-  transform: translateY(-5px); /* Move o card 5 pixels para cima */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta a sombra para dar profundidade */
+  transform: translateY(-5px); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
 }
 
 .table-responsive {
@@ -58,34 +125,34 @@
   transform: scale(1.08);
 }
 
-/* Estilos para formulários (de login.html e cadastro.html) */
+
 .form-container {
   max-width: 500px;
   margin: 0 auto;
 }
 
-/* Estilos da página AMV (amv.html) */
 .grupo-botoes {
   margin-bottom: 30px;
   padding: 20px;
   border-radius: 8px;
-  background-color: #f8f9fa;
+  background-color: transparent;
 }
 
 .grupo-titulo {
   text-align: center;
   margin-bottom: 15px;
   padding-bottom: 10px;
+  border-radius: 8px;
   border-bottom: 2px solid #0d6efd;
+  background-color: #f8f9fa;
 }
 
-/* Estilo dos botões de CDV (cdv.html) */
 .cdv-btn {
   font-size: 1rem;
   font-weight: 500;
 }
 
-/* Estilos da página de detalhes de CDV (cdv_detail.html) */
+/* Estilos da página de detalhes de CDV */
 .single-card-row {
   grid-column: 1 / -1;
   display: flex;
@@ -102,7 +169,7 @@
   }
 }
 
-/* Estilos da página de detalhes de AMV (amv_detail.css) */
+/* Estilos da página de detalhes de AMV */
 .container-amv-detail {
   padding: 20px;
   max-width: 800px;
@@ -140,25 +207,34 @@
   margin-top: 20px;
 }
 
-/* Estilos para o accordion com transição na página AMV */
+/* Estilos para transição na página AMV */
 .amv-button-group {
-  max-height: 0; /* Começa com altura zero (escondido) */
-  overflow: hidden; /* Esconde o conteúdo que transborda */
-  opacity: 0; /* Começa totalmente transparente */
-  transition: max-height 0.5s ease-out, opacity 0.3s ease-in; /* Define a animação */
+  max-height: 0; 
+  overflow: hidden; 
+  opacity: 0; 
+  transition: max-height 0.5s ease-out, opacity 0.3s ease-in; 
 }
 
-/* Quando o grupo de botões estiver ativo (visível) */
+
 .amv-button-group.active {
-  max-height: 500px; /* Altura máxima para a animação (ajuste se tiver muitos botões) */
-  opacity: 1; /* Torna totalmente visível */
+  max-height: 500px; 
+  opacity: 1; 
 }
 
-/* Estilo para a setinha do lado do título */
+
 .grupo-titulo i {
     transition: transform 0.3s ease;
 }
 
 .grupo-titulo.active i {
-    transform: rotate(180deg); /* Gira a seta para cima quando aberto */
+    transform: rotate(180deg);
+}
+
+.btn-outline-primary {
+    transition: background-color 0.3s, color 0.3s;
+   background-color: rgba(255, 255, 255, 0.9); 
+}
+.btn-outline-success {
+    transition: background-color 0.3s, color 0.3s;
+   background-color: rgba(255, 255, 255, 0.9); 
 }

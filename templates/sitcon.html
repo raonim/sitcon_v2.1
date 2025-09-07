@@ -5,53 +5,40 @@
 {% block content %}
 <h1 class="text-center mb-5">Equipamentos</h1>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center text-center">
+  
   <div class="col-md-4">
     <a href="/amv" class="card-link">
-    <div class="card h-100 card-hover-effect image-hover equipamento-card">
-      <div class="card-body text-center">
-        <h5 class="card-title">AMV</h5>
-          <img
-            src="{{ url_for('static', filename='images/amv.png') }}"
-            alt=""
-            class="img-fluid rounded"
-            style="max-width: 200px"
-          />
-        </div>
-      </div>
-    </a>
-    </div>
-
-  <div class="col-md-4">
-    <a href="/cdv" class="card-link">
-    <div class="card h-100 card-hover-effect image-hover equipamento-card">
-      <div class="card-body text-center">
-        <h5 class="card-title">Circuitos de Via</h5>
-          <img
-            src="{{ url_for('static', filename='images/cdv.png') }}"
-            alt="Acessar CDV"
-            class="img-fluid rounded"
-            style="max-width: 200px"
-          />
-        </div>
-      </div>
-    </a>
-    </div>
-
-  <div class="col-md-4">
-    <a href="sinais" class="card-link">
-    <div class="card h-100 card-hover-effect image-hover equipamento-card">
-      <div class="card-body text-center">
-        <h5 class="card-title">Sinais</h5>
-          <img
-            src="{{ url_for('static', filename='images/sinal.png') }}"
-            alt="Acessar Sinais"
-            class="img-fluid rounded"
-            style="max-width: 200px"
-          />
+      <div class="card equipment-card">
+        <div class="equipment-circle">
+          <img src="{{ url_for('static', filename='images/amv.png') }}" alt="AMV" />
+          <h5 class="card-title mt-2">AMV</h5>
         </div>
       </div>
     </a>
   </div>
+
+  <div class="col-md-4">
+    <a href="/cdv" class="card-link">
+      <div class="card equipment-card">
+        <div class="equipment-circle">
+          <img src="{{ url_for('static', filename='images/cdv.png') }}" alt="CDV" />
+          <h5 class="card-title mt-2">Circuitos de Via</h5>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-md-4">
+    <a href="/sinais" class="card-link">
+      <div class="card equipment-card">
+        <div class="equipment-circle">
+          <img src="{{ url_for('static', filename='images/sinal.png') }}" alt="Sinais" />
+          <h5 class="card-title mt-2">Sinais</h5>
+        </div>
+      </div>
+    </a>
+  </div>
+
 </div>
 {% endblock %}

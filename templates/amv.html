@@ -6,14 +6,13 @@
 <h1 class="text-center mb-5">{{ titulo }}</h1>
 
 <div class="grupo-botoes">
-  <h2 class="grupo-titulo text-primary">Comando</h2>
-  <div class="row g-3">
+  <h2 data-target="#comando-group" class="grupo-titulo text-primary" style="cursor: pointer;">
+    Comando <i class="bi bi-chevron-down"></i>
+  </h2>
+  <div id="comando-group" class="row g-3 amv-button-group">
     {% for amv in amvs %}
     <div class="col-md-3 col-sm-4 col-6">
-      <a
-        href="/amv_comando/{{ amv }}"
-        class="btn btn-outline-primary w-100 py-3"
-      >
+      <a href="/amv_comando/{{ amv }}" class="btn btn-outline-primary w-100 py-3">
         AMV {{ amv }} LUZ
       </a>
     </div>
@@ -22,14 +21,13 @@
 </div>
 
 <div class="grupo-botoes">
-  <h2 class="grupo-titulo text-success">Indicação</h2>
-  <div class="row g-3">
+  <h2 data-target="#indicacao-group" class="grupo-titulo text-success" style="cursor: pointer;">
+    Indicação <i class="bi bi-chevron-down"></i>
+  </h2>
+  <div id="indicacao-group" class="row g-3 amv-button-group">
     {% for amv in amvs %}
     <div class="col-md-3 col-sm-4 col-6">
-      <a
-        href="/amv_indicacao/{{ amv }}"
-        class="btn btn-outline-success w-100 py-3"
-      >
+      <a href="/amv_indicacao/{{ amv }}" class="btn btn-outline-success w-100 py-3">
         AMV {{ amv }} LUZ
       </a>
     </div>

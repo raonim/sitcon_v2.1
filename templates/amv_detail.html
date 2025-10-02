@@ -4,8 +4,25 @@
 
 {% block content %}
 <div class="alert {{ 'alert-primary' if tipo == 'Comando' else 'alert-success' }}">
-    <h2>AMV {{ amv_id }} - {{ tipo }}</h2>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>AMV {{ amv_id }} - {{ tipo }}</h2>
+        {% if coordenadas %}
+            <button id="mostrar-mapa-btn" class="btn btn-info">
+                <i class="bi bi-geo-alt-fill"></i> Ver no Mapa
+            </button>
+        {% endif %}
+    </div>
 </div>
+
+{% if coordenadas %}
+<div id="mapa-container" 
+     class="mb-4" 
+     style="height: 400px; display: none;"
+     data-lat="{{ coordenadas.lat }}"
+     data-lon="{{ coordenadas.lon }}">
+</div>
+{% endif %}
+
 
 {% for registro in registros %}
 <div class="card mb-4">

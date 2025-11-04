@@ -11,6 +11,7 @@
 
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
   <div class="page-wrapper">
     <nav class="navbar bg-primary navbar-dark">
       <div class="container-fluid">
@@ -34,7 +35,7 @@
       </div>
     </nav>
 
-    <div class="container mt-5">
+    <div class="container mt-5" id="main-content" tabindex="-1">
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             {% for category, message in messages %}

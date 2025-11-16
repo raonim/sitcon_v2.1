@@ -16,6 +16,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // --- BLOCO 1.5: INICIALIZA FOCO DA SANFONA ---
+    // Esta função garante que, ao carregar a página, os links dentro
+    // das sanfonas colapsadas não sejam focáveis via 'Tab'.
+    const allAccordionGroups = document.querySelectorAll('.amv-button-group');
+    
+    allAccordionGroups.forEach(group => {
+        // Verifica se o grupo NÃO está ativo (colapsado) no carregamento
+        if (!group.classList.contains('active')) {
+            // Pega todos os links (botões) dentro dele
+            const links = group.querySelectorAll('a');
+            // E desativa o 'Tab' para todos eles
+            links.forEach(link => {
+                link.tabIndex = -1;
+            });
+        }
+    });
 
 
 // --- BLOCO 2: LÓGICA CORRIGIDA PARA O MAPA ---
@@ -61,6 +77,42 @@ accordionTitles.forEach(title => {
         
         // E também adiciona ou remove a classe 'active' no grupo de botões (para a animação)
         targetGroup.classList.toggle('active');
+
+        // --- INÍCIO DA MODIFICAÇÃO DE ACESSIBILIDADE ---
+        
+        // Verifica se a sanfona está expandida AGORA (depois do toggle)
+        const isExpanded = targetGroup.classList.contains('active');
+        
+        // Pega todos os links (botões) dentro do grupo que foi clicado
+        const links = targetGroup.querySelectorAll('a');
+        
+        // Atualiza o 'tabIndex' de todos os links
+        links.forEach(link => {
+            // Se estiver expandido, tabIndex = 0 (torna focável)
+            // Se estiver colapsado, tabIndex = -1 (torna não-focável)
+            link.tabIndex = isExpanded ? 0 : -1;
+        });
+        // --- FIM DA MODIFICAÇÃO DE ACESSIBILIDADE ---
+    });
+});
+
+// Encontra os mesmos títulos que tornamos focáveis
+const accessibleButtons = document.querySelectorAll('.grupo-titulo[role="button"]');
+
+accessibleButtons.forEach(button => {
+    // Adiciona um ouvinte para teclas
+    button.addEventListener('keydown', function(event) {
+
+        // Verifica se a tecla pressionada é 'Enter' ou 'Espaço'
+        if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
+
+            // Impede a página de rolar (ação padrão do 'Espaço')
+            event.preventDefault();
+
+            // Simula um clique no elemento, o que aciona o seu BLOCO 3
+            // (o código que abre/fecha a sanfona)
+            this.click();
+        }
     });
 });
 

@@ -208,6 +208,8 @@ body {
 }
 
 /* Estilos para transição na página AMV */
+
+
 .amv-button-group {
   max-height: 0; 
   overflow: hidden; 
@@ -238,3 +240,34 @@ body {
     transition: background-color 0.3s, color 0.3s;
    background-color: rgba(255, 255, 255, 0.9); 
 }
+
+/* Estilos de Acessibilidade */
+
+.skip-link {
+    position: absolute;
+    top: -40px; /* Esconde o link para fora da tela */
+    left: 0;
+    background: #0d6efd; /* Cor primária do Bootstrap */
+    color: white;
+    padding: 8px;
+    z-index: 9999;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.skip-link:focus {
+    top: 10px; /* Traz o link para a tela quando focado */
+    left: 10px;
+}
+/* Adiciona um "anel de foco" visível nos cards da página inicial */
+.card-link:focus .equipment-circle {
+    /* Este é o mesmo "brilho" azul que a classe focus-ring usa */
+    box-shadow: 0 0 0 0.25rem rgba(253, 13, 241, 0.815);
+} 
+.grupo-titulo:focus {
+    /* O mesmo "brilho" azul que usamos nos cards */
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+
+    /* Garante que o navegador não adicione um 'outline' feio */
+    outline: none; 
+}      
